@@ -1,4 +1,6 @@
 Project 1: Tokenizer
+
+main.c contains a simple UI for the tokenizer.
 ====================
 # Instructions:
 
