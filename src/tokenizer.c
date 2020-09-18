@@ -1,5 +1,5 @@
-#inlcude <stdio.h>
-#include <header.h>
+#include <stdio.h>
+#include "tokenizer.h"
 #include "malloc.h"
 
 int space_char(char c)
@@ -26,31 +26,31 @@ int non_space_char(char c)
     }
 }
 
-char *word_start(char *s)
+char *word_start(char *str)
 {
-  while(space_char(*s))
+  while(space_char(*str))
   {
-    if(non_space_char(*s)
+    if(non_space_char(*str))
     {
-     return s;
+     return str;
     }
-	*s++;
+	*str++;
   }
-  return s;
+  return str;
 }
 
-  char *word_terminator(char *word)
-  {
-    while(non_space_char(*word))
-      {
-	if(space_char(*word))
+char *word_terminator(char *word)
+{
+  while(non_space_char(*word))
+    {
+      if(space_char(*word))
 	  {
 	    return word;
 	  }
 	*word++;
       }
     return word;
-  }
+}
 
   int count_words(char *s)
   {
@@ -66,7 +66,7 @@ char *word_start(char *s)
     return counter;
   }
 
-  char *copy_str(char *inStr, int len)
+  char *copy_str(char *inStr, short len)
   {
     len = word_terminator(inStr) - word_start(inStr);
     char *stringCopy = malloc((len + 1) * sizeof(char));
