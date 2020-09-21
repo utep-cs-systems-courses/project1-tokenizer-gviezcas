@@ -68,19 +68,52 @@ char *word_terminator(char *word)
 
   char *copy_str(char *inStr, short len)
   {
-    len = word_terminator(inStr) - word_start(inStr);
     char *stringCopy = malloc((len + 1) * sizeof(char));
 
     for(int i = 0; i <= len; i++)
       {
-	if(non_space_char(*inStr))
-	  {
-	    stringCopy[i] = inStr[i];
-	  }
-	else if(space_char(*inStr))
+	if(space_char(inStr[i]))
 	  {
 	    stringCopy[i] = '\0';
+	  }
+	else
+	  {
+	    stringCopy[i] = inStr[i];
 	  }
       }
     return stringCopy;
   }
+
+void print_tokens(char **tokens)
+{
+  for(int i = 0; **tokens != '\0'; i++)
+    {
+      printf("\n[%d] = %s", i, tokens[i]);
+    }
+}
+
+int count_letters(char *s)
+{
+  int counter = 0;
+
+  while(*s++ != '\0')
+    {
+      counter++;
+    }
+}
+
+char **tokenize(char *str)
+{
+  int lettersLen = count_letters(str);
+  int wordsLen = count_words(str);
+  char **tokenizedString = malloc((wordsLen + 1)* sizeof(char));
+  char *token = malloc((lettersLen + 1) * sizeof(char));
+  token = copy_str(str, lettersLen);
+
+  for(int i = 0; i < (lettersLen + 1); i++)
+    {
+      tokenizedString[i] = token;
+      token = word_terminator(token);
+      *token++;
+    }
+}
