@@ -107,6 +107,24 @@ int count_letters(char *s)
   return counter;
 }
 
+char *remove_spaces(char *s, char *newString)
+{
+  int c = 0;
+  int d = 0;
+
+  while(s[c] != '\0')
+    {
+      if(!(s[c] == ' ' && s[c+1] == ' '))
+	{
+	  newString[d] = s[c];
+	  d++;
+	}
+      c++;
+    }
+  newString[d] = '\0';
+  return newString;
+}
+
 char **tokenize(char *str)
 {
   int lettersLen = count_letters(str);
@@ -116,7 +134,7 @@ char **tokenize(char *str)
   token = copy_str(str, lettersLen);
   for(int i = 0; i < (wordsLen + 1); i++)
   {
-    tokenizedString[i] = malloc((wordsLen + 1) * sizeof(char));
+    tokenizedString[i] = malloc((lettersLen + 1) * sizeof(char));
   }
 
   for(int i = 0; i < (wordsLen + 1); i++)

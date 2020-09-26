@@ -1,7 +1,8 @@
 #ifndef _TOKENIZER_
 #define _TOKENIZER_
 
-
+/*Returns a pointer to a string with extra spaces removed.*/
+char *remove_spaces(char *s, char *newString);
 /* Return true (non-zero) if c is a whitespace characer
    ('\t' or ' ').  
    Zero terminators are not printable (therefore false) */

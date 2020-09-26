@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "tokenizer.h"
-#include "tokenizer.c"
 
 #define MAX_SIZE 300
 
@@ -11,21 +11,23 @@ int main()
   while(loop)
   {
     char *userInput = malloc(MAX_SIZE * sizeof(char));
+    char *newString = malloc(MAX_SIZE * sizeof(char));
     if(userInput == NULL)
     {
       printf("No Memory\n");
       return 1;
     }
     
-    printf("Please enter the item to tokenize:\n");
+    printf("Please enter the item to tokenize:  (Enter q to quit)\n");
     printf("$");
     fgets(userInput, MAX_SIZE, stdin);
+    newString = remove_spaces(userInput, newString);
 
-    if(*userInput == 'q')
+    if(*newString == 'q')
     {
       loop = 0;
     }else{
-      char **tokenizedInput = tokenize(userInput);
+      char **tokenizedInput = tokenize(newString);
       printf("Tokenized item:\n");
       print_tokens(tokenizedInput);
     }
