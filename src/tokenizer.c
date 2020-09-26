@@ -54,15 +54,17 @@ char *word_terminator(char *word)
 
   int count_words(char *s)
   {
-    int counter = 1;
+    int counter = 0;
 
-    for(int i = 0; s[i] != '\0'; i++)
+    while(*s != '\0')
+    {
+      if(non_space_char(*s))
       {
-	if(space_char(s[i]))
-	  {
-	    counter++;
-	  }
+	counter++;
+	s = word_terminator(s);
+	*s++;
       }
+     }
     return counter;
   }
 
@@ -86,9 +88,11 @@ char *word_terminator(char *word)
 
 void print_tokens(char **tokens)
 {
-  for(int i = 0; **tokens != '\0'; i++)
+  int i = 0;
+  while(tokens[i] != NULL)
     {
-      printf("\n[%d] = %s", i, tokens[i]);
+      printf("[%d] = %s\n", i, tokens[i]);
+      i++;
     }
 }
 
@@ -100,6 +104,7 @@ int count_letters(char *s)
     {
       counter++;
     }
+  return counter;
 }
 
 char **tokenize(char *str)
@@ -107,13 +112,28 @@ char **tokenize(char *str)
   int lettersLen = count_letters(str);
   int wordsLen = count_words(str);
   char **tokenizedString = malloc((wordsLen + 1)* sizeof(char));
-  char *token = malloc((lettersLen + 1) * sizeof(char));
+  char *token;
   token = copy_str(str, lettersLen);
+  for(int i = 0; i < (wordsLen + 1); i++)
+  {
+    tokenizedString[i] = malloc((wordsLen + 1) * sizeof(char));
+  }
 
-  for(int i = 0; i < (lettersLen + 1); i++)
+  for(int i = 0; i < (wordsLen + 1); i++)
+  {
+    if(i == wordsLen)
+    {
+      tokenizedString[i] = '\0';
+    }else
     {
       tokenizedString[i] = token;
       token = word_terminator(token);
       *token++;
+      while(space_char(*token))
+      {
+	*token++;
+      }
     }
+  }
+  return tokenizedString;
 }
