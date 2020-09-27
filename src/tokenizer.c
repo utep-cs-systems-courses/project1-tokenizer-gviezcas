@@ -71,8 +71,8 @@ char *word_terminator(char *word)
   char *copy_str(char *inStr, short len)
   {
     char *stringCopy = malloc((len + 1) * sizeof(char));
-
-    for(int i = 0; i <= len; i++)
+    int i = 0;
+    for(i = 0; i <= len; i++)
       {
 	if(space_char(inStr[i]))
 	  {
@@ -94,6 +94,17 @@ void print_tokens(char **tokens)
       printf("[%d] = %s\n", i, tokens[i]);
       i++;
     }
+}
+
+void free_tokens(char **tokens)
+{
+  int lenWords = count_words(*tokens);
+  int i = 0;
+  for(i = 0; i < lenWords; i++)
+    {
+      free(tokens[i]);
+    }
+	free(tokens);
 }
 
 int count_letters(char *s)
@@ -132,11 +143,12 @@ char **tokenize(char *str)
   token = copy_str(str, lettersLen);
   int wordsLen = count_words(token);
   char **tokenizedString = malloc((wordsLen + 1)* sizeof(char));
+  int i = 0;
   if(tokenizedString == NULL)
     {
       printf("No memory at tokenizedString\n");
     }
-  for(int i = 0; i < (wordsLen + 1); i++)
+  for(i = 0; i < (wordsLen + 1); i++)
   {
     tokenizedString[i] = malloc((lettersLen + 1) * sizeof(char));
     if(tokenizedString[i] == NULL)
@@ -145,7 +157,7 @@ char **tokenize(char *str)
       }
   }
 
-  for(int i = 0; i < (wordsLen + 1); i++)
+  for(i = 0; i < (wordsLen + 1); i++)
   {
     if(i == wordsLen)
     {

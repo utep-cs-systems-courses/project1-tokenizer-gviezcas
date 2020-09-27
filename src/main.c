@@ -30,7 +30,11 @@ int main()
       char **tokenizedInput = tokenize(newString);
       printf("Tokenized item:\n");
       print_tokens(tokenizedInput);
+      free(*tokenizedInput);
+      //free_tokens(tokenizedInput);
     }
+    free(userInput);
+    free(newString);
   }
   printf("Thank you. Goodbye.\n");
   return 0;
