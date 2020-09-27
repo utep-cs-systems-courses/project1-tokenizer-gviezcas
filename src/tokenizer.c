@@ -128,13 +128,21 @@ char *remove_spaces(char *s, char *newString)
 char **tokenize(char *str)
 {
   int lettersLen = count_letters(str);
-  int wordsLen = count_words(str);
-  char **tokenizedString = malloc((wordsLen + 1)* sizeof(char));
   char *token;
   token = copy_str(str, lettersLen);
+  int wordsLen = count_words(token);
+  char **tokenizedString = malloc((wordsLen + 1)* sizeof(char));
+  if(tokenizedString == NULL)
+    {
+      printf("No memory at tokenizedString\n");
+    }
   for(int i = 0; i < (wordsLen + 1); i++)
   {
     tokenizedString[i] = malloc((lettersLen + 1) * sizeof(char));
+    if(tokenizedString[i] == NULL)
+      {
+	printf("No memory at tokenizedString[i]\n");
+      }
   }
 
   for(int i = 0; i < (wordsLen + 1); i++)
